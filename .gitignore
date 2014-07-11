@@ -9,3 +9,8 @@ _Store
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
+
+#Temp files
+*~
+*.swp
+*.swo
