@@ -8,10 +8,6 @@ RELEASE
 .bundle
 .bundle/config
 .DS_Store
-config/database.yml
-config/s3_config.yml
-config/sec_config.yml
-config/secrets.yml
 log
 log/**/*
 public/javascripts/*.js
