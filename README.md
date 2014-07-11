@@ -9,3 +9,8 @@
 	1. `git add .` -> informuje git żeby dodał wszystkie zmiany w bieżącym folderze, do swojego lokalnego folderu
 	2. `git commit -m "JAKAS_WIADOMOSC"` -> dodanym przed chwilą zmianą nadaje ID i dołącza do nich JAKAS_WIADOMOSC (najlepiej tam wpisać info, co zrobiliście)
 	3. `git push origin master` -> wysyłacie na git-a wasze zmiany( wg formatu `git push GDZIE? CO?`- gdzie: na nasze repozytorim na gicie, co: nazwę gałęzi ze zmianami nad którą pracujecie: domyślnie master ) 
+
+# Dobre praktyki
+* małe zmiany, ale często wrzucane na githuba
+* trzymajmy się nazewnictwa commitów po angielsku
+* nie używamy komendy git rebase
