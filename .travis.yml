@@ -1,0 +1,7 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: ojkHNMbkWVb3rOmhQaGPwdeAnNCzOGP/pdbsufesqOCOtihqebfbQw03ks2AJ6yGTqp6kAH+OF+9d9fPoU5sSzH+SR4QcuqllibLSwhzl567TL13jMB9ebQHai6AFcw0NI98SXa2hEp/jJkLFPreAnSI2MCzCG6AxJanskLzBWM=
+  app: geommo
+  on:
+    repo: matDobek/geoMMO
