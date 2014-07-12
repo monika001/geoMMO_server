@@ -9,3 +9,8 @@ test:
   encoding: unicode
   database: geoMMO_test
   pool: 5
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
