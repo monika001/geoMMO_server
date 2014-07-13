@@ -12,9 +12,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
+gem 'omniauth-google-oauth2'
 
 group :development do
 	gem 'spring'
+	gem 'figaro'
 end
 
 group :development, :test do
