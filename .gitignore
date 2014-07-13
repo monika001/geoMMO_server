@@ -21,3 +21,6 @@ coverage/
 public/assets
 *.csv
 .ruby-gemset
+
+# Ignore application configuration
+/config/application.yml
