@@ -6,4 +6,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    -if current_user
+      "Witaj #{current_user.first_name}!"
+      = button_to 'Logout', log_out_path, method: :delete
+    -else
+      = link_to 'Login through Google', 'auth/google_oauth2'
+
     = yield
