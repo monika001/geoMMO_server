@@ -187,6 +187,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
+  omniauth
   omniauth-google-oauth2
   pg
   pry

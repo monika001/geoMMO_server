@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
+gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
 group :development do
