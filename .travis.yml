@@ -5,3 +5,8 @@ deploy:
   app: geommo
   on:
     repo: matDobek/geoMMO
+
+test:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500
