@@ -6,7 +6,10 @@ deploy:
   on:
     repo: matDobek/geoMMO
 
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  
 test:
-  adapter: sqlite3
-  database: ":memory:"
-  timeout: 500
+  adapter: postgresql
+  database: travis_ci_test
+  username: postgres
