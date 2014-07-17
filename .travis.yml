@@ -8,6 +8,3 @@ deploy:
 
 script:
   - bundle exec rake db:migrate
-  - bundle exec rake spec
-before_script:
-  - bundle exec rake db:create RAILS_ENV=test
