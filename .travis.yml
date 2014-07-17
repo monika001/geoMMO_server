@@ -6,8 +6,6 @@ deploy:
   on:
     repo: matDobek/geoMMO
 
-env:
-  - DB=postgresql
 script:
   - bundle exec rake db:migrate
   - bundle exec rake spec
