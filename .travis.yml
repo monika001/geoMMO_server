@@ -7,9 +7,6 @@ deploy:
     repo: matDobek/geoMMO
 
 before_script:
-  - psql -c 'create database geoMMO_test;' -U postgres
-
-test:
-  adapter: postgresql
-  database: geoMMO_test
-  username: postgres
+  - RAILS_ENV=test
+  - rake db:create
+  - db:structure:load
