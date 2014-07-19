@@ -1,16 +1,15 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  database: geoMMO_development
   pool: 5
+
+development:
+  <<: *default
+  database: geoMMO_development
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: geoMMO_test
-  pool: 5
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
+  <<: *default
