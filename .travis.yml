@@ -4,4 +4,10 @@ deploy:
     secure: ojkHNMbkWVb3rOmhQaGPwdeAnNCzOGP/pdbsufesqOCOtihqebfbQw03ks2AJ6yGTqp6kAH+OF+9d9fPoU5sSzH+SR4QcuqllibLSwhzl567TL13jMB9ebQHai6AFcw0NI98SXa2hEp/jJkLFPreAnSI2MCzCG6AxJanskLzBWM=
   app: geommo
   on:
-    repo: matDobek/geoMMO
+    repo: matDobek/geoMMO_server
+
+script:
+  - bundle exec rake db:migrate
+  - bundle exec rake spec
+before_script:
+  - bundle exec rake db:create RAILS_ENV=test
