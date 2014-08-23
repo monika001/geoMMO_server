@@ -24,7 +24,7 @@ end
 group :development, :test do
   gem 'pry'
 	gem 'rspec-rails'
-	gem 'factory_girl'
+	gem 'factory_girl_rails'
   gem 'guard'
   gem 'guard-rspec', require: false
 end
