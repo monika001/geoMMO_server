@@ -2,22 +2,9 @@
 %html
   %head
     %title geoMMO
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    %nav.navbar.navbar-inverse
-      .container
-        %ul.nav.navbar-nav
-          %li.brand= link_to 'geo MMO', root_path
-
-        %ul.nav.navbar-nav.navbar-right
-          -if current_user
-            %li.navbar-text
-              Witaj #{current_user.first_name}!
-            %li= button_to 'Logout', log_out_path, method: :delete, class: 'btn btn-lg btn-primary'
-          -else
-            %li= button_to 'Login through Google', 'auth/google_oauth2', class: 'btn btn-lg btn-primary'
-
     .container
       = yield

@@ -1,12 +1,8 @@
 class Api::V1::SampleServiceController < ApplicationController
+  respond_to :json
+
   def sample
-    render status: 200,
-      json: {
-        success: true,
-        info: 'Logged in',
-        data: {
-          sample: 'sample'
-        }
-      }
+    obj = { success: true, info: 'Logged in', data: { sample: 'sample'  }  }
+    respond_with obj, status: 200
   end
 end

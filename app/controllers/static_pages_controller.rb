@@ -1,4 +1,2 @@
-class StaticPagesController < ApplicationController
-  def create
-  end
+class StaticPagesController < ActionController::Base
 end
