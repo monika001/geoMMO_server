@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::SampleServiceController, :type => :controller do
+describe Api::V1::SampleServiceController do
   describe 'GET sample' do
     it 'should respond with status 200' do
       get :sample, format: :json
