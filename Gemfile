@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
+gem 'active_model_serializers'
 
 group :development do
   gem 'spring'
