@@ -17,18 +17,19 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
 group :development do
-	gem 'spring'
-	gem 'figaro'
+  gem 'spring'
+  gem 'figaro'
 end
 
 group :development, :test do
   gem 'pry'
-	gem 'rspec-rails'
-	gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
   gem 'guard'
   gem 'guard-rspec', require: false
 end
 
 group :production do
-	gem 'rails_12factor'
+  gem 'rails_12factor'
 end
