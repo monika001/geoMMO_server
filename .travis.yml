@@ -5,11 +5,13 @@ deploy:
   app: geommo
   on:
     repo: matDobek/geoMMO_server
+  strategy: git
 
 before_script:
   - bundle exec rake db:create RAILS_ENV=test
 script:
   - bundle exec rake db:migrate
   - bundle exec rake spec
+
 notifications:
     slack: geommo:vdkjgQEXjK3MmOYQL4C840UG
