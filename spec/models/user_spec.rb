@@ -4,7 +4,7 @@ describe User do
   context 'with the duplicated email' do
     let!(:user) { create(:user, email: 'sample@sample.com')  }
     let!(:duplicated_user) { build(:user, email: 'sample@sample.com')  }
-    
+
     it 'is not valid' do
       expect(duplicated_user.valid?).to eq false
     end

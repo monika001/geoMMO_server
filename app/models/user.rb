@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   before_create :generate_accesss_token
-  
+
   validates :token, :email, uniqueness: true
 
   private
