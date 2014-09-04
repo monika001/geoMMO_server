@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'sample', to: 'sample_service#sample'
 
       resource :user, only: [:create]
+      resource :session, only: [:create, :destroy]
     end
   end
 end
