@@ -3,6 +3,10 @@ require 'rails_helper'
 describe Session::LogUserIn do
   let(:user) { create(:user) }
 
+  before do
+    add_user_to_session user
+  end
+
   describe ".with_credentials" do
     context "with invalid credentials" do
       let(:credentials) { nil }
@@ -24,10 +28,6 @@ describe Session::LogUserIn do
   end
 
   describe ".with_token" do
-    before do
-      add_user_to_session user
-    end
-
     context "with invalid token" do
       let(:token) { nil }
 
