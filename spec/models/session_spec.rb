@@ -91,4 +91,39 @@ describe Session do
       end
     end
   end
+
+  describe ".regenerate_token" do
+    context "when new user" do
+      it "returns string token" do
+        expect( subject.regenerate_token(user) ).to be_a String
+      end
+
+      it "add user to session" do
+        old_length = subject.send(:store).length
+        subject.regenerate_token(user)
+
+        expect( subject.send(:store).length ).to eq old_length + 1
+      end
+    end
+
+    context "when user already exists" do
+      before do
+        subject.send(:add_user_to_session, user)
+      end
+
+      it "generates new token" do
+        old_token = subject.send(:token_of, user)
+        subject.regenerate_token(user)
+
+        expect( subject.send(:token_of, user) ).not_to eq old_token
+      end
+
+      it "does NOT cause redundant of users" do
+        old_length = subject.send(:store).length
+        subject.regenerate_token(user)
+
+        expect( subject.send(:store).length ).to eq old_length
+      end
+    end
+  end
 end
