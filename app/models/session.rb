@@ -34,11 +34,15 @@ class Session
   end
 
   def token_of(user)
-    store.each { |k,v| return k if v == user }
+    tokens_of(user).first
+  end
+
+  def tokens_of(user)
+    store.select { |_,v| v == user }.keys
   end
 
   def delete_user_from_session(user)
-    store.delete( token_of user )
+    tokens_of(user).each { |k| store.delete(k) }
   end
 
   def add_user_to_session(user)
