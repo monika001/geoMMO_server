@@ -43,17 +43,17 @@ describe Session do
         end
 
         it "do NOT add new token" do
-          old_length = subject.send(:store).length
+          old_length = session_length
           subject.authenticate_user_with_credentials credentials
 
-          expect( subject.send(:store).length ).to eq old_length
+          expect( session_length ).to eq old_length
         end
 
         it "changes previous token" do
-          old_token = subject.send(:token_of, user)
+          old_token = token_of(user)
           subject.authenticate_user_with_credentials credentials
 
-          expect( subject.send(:token_of, user) ).not_to eq old_token
+          expect( token_of(user) ).not_to eq old_token
         end
       end
     end
@@ -77,7 +77,7 @@ describe Session do
     end
 
     context "with valid token" do
-      let(:token) { subject.send(:token_of, user) }
+      let(:token) { token_of(user) }
       let(:credentials) do
         { email: user.email }
       end
@@ -99,30 +99,30 @@ describe Session do
       end
 
       it "add user to session" do
-        old_length = subject.send(:store).length
+        old_length = session_length
         subject.regenerate_token(user)
 
-        expect( subject.send(:store).length ).to eq old_length + 1
+        expect( session_length).to eq old_length + 1
       end
     end
 
     context "when user already exists" do
       before do
-        subject.send(:add_user_to_session, user)
+        add_user_to_session user
       end
 
       it "generates new token" do
-        old_token = subject.send(:token_of, user)
+        old_token = token_of user
         subject.regenerate_token(user)
 
-        expect( subject.send(:token_of, user) ).not_to eq old_token
+        expect( token_of(user) ).not_to eq old_token
       end
 
       it "does NOT cause redundant of users" do
-        old_length = subject.send(:store).length
+        old_length = session_length
         subject.regenerate_token(user)
 
-        expect( subject.send(:store).length ).to eq old_length
+        expect( session_length ).to eq old_length
       end
     end
   end
@@ -130,23 +130,23 @@ describe Session do
   describe ".destroy_token" do
     context "with user out of session" do
       it "does nothing" do
-        old_length = subject.send(:store).length
+        old_length = session_length
         subject.destroy_token(user)
 
-        expect( subject.send(:store).length ).to eq old_length
+        expect( session_length ).to eq old_length
       end
     end
 
     context "with user logged in" do
       before do
-        subject.send(:add_user_to_session, user)
+        add_user_to_session user
       end
 
       it "removes user" do
-        old_length = subject.send(:store).length
+        old_length = session_length
         subject.destroy_token(user)
 
-        expect( subject.send(:store).length ).to eq old_length - 1
+        expect( session_length ).to eq old_length - 1
       end
     end
   end
