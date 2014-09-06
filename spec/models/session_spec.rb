@@ -126,4 +126,28 @@ describe Session do
       end
     end
   end
+
+  describe ".destroy_token" do
+    context "with user out of session" do
+      it "does nothing" do
+        old_length = subject.send(:store).length
+        subject.destroy_token(user)
+
+        expect( subject.send(:store).length ).to eq old_length
+      end
+    end
+
+    context "with user logged in" do
+      before do
+        subject.send(:add_user_to_session, user)
+      end
+
+      it "removes user" do
+        old_length = subject.send(:store).length
+        subject.destroy_token(user)
+
+        expect( subject.send(:store).length ).to eq old_length - 1
+      end
+    end
+  end
 end
