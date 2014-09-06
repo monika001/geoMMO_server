@@ -27,6 +27,10 @@ class Session
     add_user_to_session user
   end
 
+  def destroy_token(user)
+    delete_user_from_session user
+  end
+
   private
 
   def store
