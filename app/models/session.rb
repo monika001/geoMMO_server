@@ -15,7 +15,7 @@ class Session
     return unless credentials && credentials[:email]
 
     user = User.authenticate(credentials[:email])
-    regenerate_token user
+    regenerate_token(user)
 
     user
   end
@@ -23,12 +23,12 @@ class Session
   def regenerate_token(user)
     return unless user
 
-    delete_user_from_session user
-    add_user_to_session user
+    delete_user_from_session(user)
+    add_user_to_session(user)
   end
 
   def destroy_token(user)
-    delete_user_from_session user
+    delete_user_from_session(user)
   end
 
   private
@@ -42,7 +42,7 @@ class Session
   end
 
   def tokens_of(user)
-    store.select { |_,v| v == user }.keys
+    store.select { |_, v| v == user }.keys
   end
 
   def delete_user_from_session(user)

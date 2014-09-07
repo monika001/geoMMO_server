@@ -7,12 +7,12 @@ describe Session::LogUserOut do
     add_user_to_session(user)
   end
 
-  describe ".call" do
-    it "removes user form session" do
+  describe '.call' do
+    it 'removes user form session' do
       old_length = session_length
-      Session::LogUserOut.call user
+      Session::LogUserOut.call(user)
 
-      expect( session_length ).to eq old_length - 1
+      expect(session_length).to eq old_length - 1
     end
   end
 end
