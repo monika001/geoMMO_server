@@ -39,10 +39,26 @@ describe Api::V1::SessionsController do
   end
 
   describe '.destroy' do
+    before do
+      add_user_to_session(user)
+    end
+
     context 'with invalid token' do
+      before do
+        request.headers['HTTP_USER_API_TOKEN'] = 'invalid_token'
+        delete :destroy, format: :json
+      end
+
+      it { is_expected.to respond_with(:unauthorized) }
     end
 
     context 'with valid token' do
+      before  do
+        request.headers['HTTP_USER_API_TOKEN'] = token_of(user)
+        delete :destroy, format: :json
+      end
+
+      it { is_expected.to respond_with(:ok) }
     end
   end
 end
