@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_with_token!
+    token = request.headers['HTTP_USER_API_TOKEN']
+    @current_user = Session::LogUserIn.with_token(token) or unauthorized!
   end
 
   def unauthorized!
