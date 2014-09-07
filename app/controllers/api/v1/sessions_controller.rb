@@ -24,7 +24,7 @@ class Api::V1::SessionsController < ApplicationController
   def credentials
     {
       email: params[:credentials] && params[:credentials][:email]
-      #password: params[:credentials][:email]
+      # password: params[:credentials][:email]
     }
   end
 end
