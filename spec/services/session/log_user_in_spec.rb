@@ -22,7 +22,7 @@ describe Session::LogUserIn do
       end
 
       it 'returns user' do
-        expect(Session::LogUserIn.with_credentials(credentials)).to eq user
+        expect(Session::LogUserIn.with_credentials(credentials)).to eq [user, token_of(user)]
       end
     end
   end

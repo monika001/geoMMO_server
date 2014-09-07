@@ -4,10 +4,10 @@ class Api::V1::SessionsController < ApplicationController
   skip_before_action :authenticate_with_token!, only: [:create]
 
   def create
-    @current_user = Session::LogUserIn.with_credentials(credentials)
+    @current_user, token = Session::LogUserIn.with_credentials(credentials)
 
     if current_user
-      render json: { token: current_user.token }, status: :ok
+      render json: { token: token }, status: :ok
     else
       unauthorized!
     end

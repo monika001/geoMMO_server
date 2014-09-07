@@ -30,7 +30,7 @@ describe Session do
       end
 
       it 'returns user' do
-        expect(subject.authenticate_user_with_credentials(credentials)).to eq user
+        expect(subject.authenticate_user_with_credentials(credentials)).to eq [user, token_of(user)]
       end
 
       context 'when user already exists' do
@@ -39,7 +39,7 @@ describe Session do
         end
 
         it 'returns user' do
-          expect(subject.authenticate_user_with_credentials(credentials)).to eq user
+          expect(subject.authenticate_user_with_credentials(credentials)).to eq [user, token_of(user)]
         end
 
         it 'do NOT add new token' do
