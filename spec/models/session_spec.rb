@@ -102,7 +102,7 @@ describe Session do
         old_length = session_length
         subject.regenerate_token(user)
 
-        expect( session_length).to eq old_length + 1
+        expect(session_length).to eq old_length + 1
       end
     end
 
