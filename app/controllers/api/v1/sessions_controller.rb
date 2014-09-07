@@ -14,7 +14,7 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    Session::LogUserOut.call
+    Session::LogUserOut.call(current_user)
 
     render json: {}, status: :ok
   end
