@@ -13,10 +13,11 @@ class Session
 
   def authenticate_user_with_credentials(credentials)
     return unless credentials && credentials[:email]
-    return unless user = User.authenticate(credentials[:email])
+
+    user = User.authenticate(credentials[:email])
     token = regenerate_token(user)
 
-    [user, token]
+    [user, token] if user && token
   end
 
   def regenerate_token(user)
