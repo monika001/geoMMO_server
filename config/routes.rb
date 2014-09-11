@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json'  } do
     namespace :v1 do
-      get 'sample', to: 'sample_service#sample'
+      get 'sample',       to: 'sample_service#sample'
+      get 'sample_user',  to: 'sample_service#sample_user'
 
       resource :user, only: [:create]
       resource :session, only: [:create, :destroy]
