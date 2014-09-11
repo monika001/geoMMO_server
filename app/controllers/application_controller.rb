@@ -13,10 +13,26 @@ class ApplicationController < ActionController::Base
 
   def authenticate_with_token!
     token = request.headers['HTTP_USER_API_TOKEN']
-    @current_user = Session::LogUserIn.with_token(token) or unauthorized!
+    @current_user = Session::LogUserIn.with_token(token) or render_unauthorized!
   end
 
-  def unauthorized!
-    render json: {}, status: :unauthorized
+  def render_unauthorized!(res = {})
+    render json: res, status: :unauthorized
+  end
+
+  def render_unprocessable_entity!(res = {})
+    render json: res, status: :unprocessable_entity
+  end
+
+  def render_ok!(res = {})
+    render json: res, status: :ok
+  end
+
+  def render_bad_request!(res = {})
+    render json: res, status: :bad_request
+  end
+
+  def render_created!(res = {})
+    render json: res, status: :created
   end
 end
