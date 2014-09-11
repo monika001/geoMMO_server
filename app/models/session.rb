@@ -1,7 +1,4 @@
 class Session
-  def initialize
-  end
-
   class << self
     def authenticate_user_with_token(token)
       store[token]
