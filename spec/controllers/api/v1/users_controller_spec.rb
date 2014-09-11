@@ -17,28 +17,6 @@ describe Api::V1::UsersController do
         user_errors = User.create(unprocessable_user_params).errors
         expect(response.body).to eq user_errors.to_json
       end
-
-      context 'when email already exists' do
-        let(:email) { 'sample@email.co' }
-
-        let(:user_params) do
-          { email: email.downcase }
-        end
-
-        let(:duplicated_user_params) do
-          { email: email.upcase }
-        end
-
-        before do
-          post :create, format: :json, user: user_params
-        end
-
-        it 'is :unprocessable_entity' do
-          post :create, format: :json, user: duplicated_user_params
-
-          is_expected.to respond_with(:unprocessable_entity)
-        end
-      end
     end
 
     context 'valid request' do
