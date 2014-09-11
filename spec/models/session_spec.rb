@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Session do
-  subject { Session.instance }
+  subject { Session }
 
   let(:user) { create(:user) }
 
