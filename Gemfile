@@ -28,6 +28,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'nyan-cat-formatter'
+  gem 'faker'
 end
 
 group :production do
