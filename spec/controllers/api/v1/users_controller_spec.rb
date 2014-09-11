@@ -7,10 +7,15 @@ describe Api::V1::UsersController do
         { email: '' }
       end
 
-      it 'is :unprocessable_entity' do
+      before do
         post :create, format: :json, user: unprocessable_user_params
+      end
 
-        is_expected.to respond_with(:unprocessable_entity)
+      it { is_expected.to respond_with(:unprocessable_entity) }
+
+      it 'respond with errors' do
+        user_errors = User.create(unprocessable_user_params).errors
+        expect(response.body).to eq user_errors.to_json
       end
 
       context 'when email already exists' do
