@@ -7,9 +7,9 @@ class Api::V1::SessionsController < ApplicationController
     @current_user, token = Session::LogUserIn.with_credentials(credentials)
 
     if current_user
-      render json: { token: token }, status: :ok
+      render_ok!({ token: token })
     else
-      unauthorized!
+      render_unauthorized!
     end
   end
 
