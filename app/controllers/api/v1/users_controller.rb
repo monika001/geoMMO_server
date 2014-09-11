@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user.save ? render_created! : render_unprocessable_entity!
+    user.save ? render_created! : render_unprocessable_entity!(user.errors)
   end
 
   private
