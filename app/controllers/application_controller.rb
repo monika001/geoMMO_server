@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :null_session
+  #
+  # protect_from_forgery with: :null_session
 
   before_action :authenticate_with_token!
 
@@ -26,10 +27,6 @@ class ApplicationController < ActionController::Base
 
   def render_ok!(res = {})
     render json: res, status: :ok
-  end
-
-  def render_bad_request!(res = {})
-    render json: res, status: :bad_request
   end
 
   def render_created!(res = {})
