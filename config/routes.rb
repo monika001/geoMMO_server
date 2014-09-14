@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get 'sample',       to: 'sample_service#sample'
       get 'sample_user',  to: 'sample_service#sample_user'
 
-      resource :user, only: [:create]
+      resource :user, only: [:create, :destroy]
       resource :session, only: [:create, :destroy]
     end
   end
