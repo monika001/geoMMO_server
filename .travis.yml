@@ -6,6 +6,7 @@ deploy:
   on:
     repo: matDobek/geoMMO_server
   strategy: git
+  run: "rake db:migrate"
 
 before_script:
   - bundle exec rake db:create RAILS_ENV=test
