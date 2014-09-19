@@ -7,16 +7,16 @@ class Api::V1::SessionsController < ApplicationController
     @current_user, token = Session::LogUserIn.with_credentials(credentials)
 
     if current_user
-      render_ok!({ token: token })
+      render_ok! token: token
     else
+      # waaaat autoryzacja tutaj??????
       render_unauthorized!
     end
   end
 
   def destroy
     Session::LogUserOut.call(current_user)
-
-    render json: {}, status: :ok
+    render_ok!
   end
 
   private
