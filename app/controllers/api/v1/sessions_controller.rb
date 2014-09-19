@@ -9,7 +9,6 @@ class Api::V1::SessionsController < ApplicationController
     if current_user
       render_ok! token: token
     else
-      # waaaat autoryzacja tutaj??????
       render_unauthorized!
     end
   end
