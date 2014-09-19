@@ -7,9 +7,14 @@ class Api::V1::UsersController < ApplicationController
     user.save ? render_created! : render_unprocessable_entity!(user.errors)
   end
 
+  def destroy
+    Session::LogUserOut.call(current_user)
+    current_user.destroy ? render_ok! : render_unprocessable_entity!
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:id, :email)
   end
 end

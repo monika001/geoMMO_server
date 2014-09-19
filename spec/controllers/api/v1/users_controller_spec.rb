@@ -31,4 +31,33 @@ describe Api::V1::UsersController do
       end
     end
   end
+
+  describe '#destroy' do
+    context 'when anonymous user' do
+      before do
+        delete :destroy, format: :json
+      end
+
+      it { is_expected.to respond_with(:unauthorized) }
+    end
+
+    context 'when self' do
+      let(:user) { create(:user) }
+
+      before do
+        log_in_and_set_header(user)
+        delete :destroy, format: :json
+      end
+
+      it { is_expected.to respond_with(:ok) }
+
+      it 'deletes user from session' do
+        expect(token_of(user)).to be nil
+      end
+
+      it 'removes user from db' do
+        expect(User.find_by id: user.id).to be nil
+      end
+    end
+  end
 end
