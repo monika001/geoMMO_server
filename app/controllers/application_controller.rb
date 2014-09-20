@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_unauthorized!
-    render json: { errors: ["User is not authorized"] }, status: :unauthorized
+    render json: { errors: [ I18n.t('errors.unauthorized') ] }, status: :unauthorized
   end
 
   def render_unprocessable_entity!(errors)
@@ -27,7 +27,9 @@ class ApplicationController < ActionController::Base
     render json: res, status: :ok
   end
 
-  def render_created!(model)
+  def render_created!(model, send_localization = true)
+    # if send_localization
+    # TODO: should set header!
     render json: model, status: :created
   end
 

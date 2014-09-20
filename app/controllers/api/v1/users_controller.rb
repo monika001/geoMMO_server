@@ -17,12 +17,9 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     Session::LogUserOut.call(current_user)
+    current_user.destroy
 
-    if current_user.destroy
-      render_no_content!
-    else
-      render_unprocessable_entity! [ "Cannot delete user" ]
-    end
+    render_no_content!
   end
 
   private
