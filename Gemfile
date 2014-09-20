@@ -2,18 +2,20 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'pg'
-gem 'sass-rails'
-gem 'bootstrap-sass'
-gem 'uglifier', '>= 1.3.0'
+
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'haml-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'draper'
-gem 'active_model_serializers'
+gem 'sass-rails'
+gem 'compass-rails'
+gem 'bootstrap-sass'
+gem 'font-awesome-rails'
+
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
+
+gem 'uglifier', '>= 1.3.0'
+gem 'active_model_serializers'
 
 group :development do
   gem 'spring'
