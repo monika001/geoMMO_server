@@ -9,9 +9,9 @@ class Api::V1::UsersController < ApplicationController
       id = user.id
       uri = api_v1_user_url user
 
-      render_created! id: id, uri: uri, type: 'user'
+      render_created! user
     else
-      render_unprocessable_entity!(user.errors)
+      render_unprocessable_entity! user.errors.full_messages
     end
   end
 
@@ -19,9 +19,9 @@ class Api::V1::UsersController < ApplicationController
     Session::LogUserOut.call(current_user)
 
     if current_user.destroy
-      render_ok! email: current_user.email, message: 'successfully deleted'
+      render_no_content!
     else
-      render_unprocessable_entity!
+      render_unprocessable_entity! [ "Cannot delete user" ]
     end
   end
 

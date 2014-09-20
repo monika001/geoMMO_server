@@ -14,8 +14,9 @@ describe Api::V1::UsersController do
       it { is_expected.to respond_with(:unprocessable_entity) }
 
       it 'respond with errors' do
-        user_errors = User.create(unprocessable_user_params).errors
-        expect(response.body).to eq user_errors.to_json
+        user = User.create(unprocessable_user_params)
+
+        expect(json_response[:errors]).to eq user.errors.full_messages
       end
     end
 
@@ -24,18 +25,20 @@ describe Api::V1::UsersController do
         { email: 'sample@sample.co' }
       end
 
+      let(:user) { User.find_by(user_params) }
+
       before do
         post :create, format: :json, user: user_params
       end
 
       it { is_expected.to respond_with :created }
 
-      it 'returns id, uri and type of created model' do
-        user = User.find_by email: user_params[:email]
-        expected_response = { id: user.id, uri: api_v1_user_url(user), type: 'user' }
-        response_hash = JSON.parse(response.body).symbolize_keys!
+      it 'returns id' do
+        expect(json_response[:user][:id]).to eq user[:id]
+      end
 
-        expect(response_hash).to eq expected_response
+      it 'returns email' do
+        expect(json_response[:user][:email]).to eq user[:email]
       end
     end
   end
@@ -47,6 +50,10 @@ describe Api::V1::UsersController do
       end
 
       it { is_expected.to respond_with(:unauthorized) }
+
+      it 'returns errors messages' do
+        expect(json_response[:errors]).not_to be_empty
+      end
     end
 
     context 'when self' do
@@ -57,7 +64,7 @@ describe Api::V1::UsersController do
         delete :destroy, format: :json
       end
 
-      it { is_expected.to respond_with(:ok) }
+      it { is_expected.to respond_with(:no_content) }
 
       it 'deletes user from session' do
         expect(token_of(user)).to be nil
@@ -65,10 +72,6 @@ describe Api::V1::UsersController do
 
       it 'removes user from db' do
         expect(User.find_by id: user.id).to be nil
-      end
-
-      it 'returns email' do
-        expect(json_response[:email]).to eq user.email
       end
     end
   end

@@ -15,19 +15,23 @@ class ApplicationController < ActionController::Base
     end or render_unauthorized!
   end
 
-  def render_unauthorized!(res = {})
-    render json: res, status: :unauthorized
+  def render_unauthorized!
+    render json: { errors: ["User is not authorized"] }, status: :unauthorized
   end
 
-  def render_unprocessable_entity!(res = {})
-    render json: res, status: :unprocessable_entity
+  def render_unprocessable_entity!(errors)
+    render json: { errors: errors }, status: :unprocessable_entity
   end
 
-  def render_ok!(res = {})
+  def render_ok!(res)
     render json: res, status: :ok
   end
 
-  def render_created!(res = {})
-    render json: res, status: :created
+  def render_created!(model)
+    render json: model, status: :created
+  end
+
+  def render_no_content!
+    head :no_content
   end
 end
