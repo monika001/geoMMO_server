@@ -4,10 +4,10 @@ class Api::V1::SessionsController < ApplicationController
   skip_before_action :authenticate_with_token!, only: [:create]
 
   def create
-    @current_user, token = Session::LogUserIn.with_credentials(credentials)
+    @current_user, token = Session::LogUserIn.with_credentials(session_params)
 
     if current_user
-      render_ok! token: token
+      render_ok! session: { token: token }
     else
       render_unauthorized!
     end
@@ -15,15 +15,14 @@ class Api::V1::SessionsController < ApplicationController
 
   def destroy
     Session::LogUserOut.call(current_user)
-    render_ok! email: current_user.email, message: 'successfully logged out'
+    render_no_content!
   end
 
   private
 
-  def credentials
+  def session_params
     {
-      email: params[:credentials] && params[:credentials][:email]
-      # password: params[:credentials][:email]
+      email: params[:session] && params[:session][:email]
     }
   end
 end
