@@ -67,11 +67,8 @@ describe Api::V1::UsersController do
         expect(User.find_by id: user.id).to be nil
       end
 
-      it 'returns email, and message' do
-        expected_response = { email: user.email, message: 'successfully deleted'  }
-        response_hash = JSON.parse(response.body).symbolize_keys!
-
-        expect(response_hash).to eq expected_response
+      it 'returns email' do
+        expect(json_response[:email]).to eq user.email
       end
     end
   end
