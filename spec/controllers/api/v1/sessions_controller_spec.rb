@@ -44,7 +44,6 @@ describe Api::V1::SessionsController do
 
     context 'with invalid token' do
       before do
-        request.headers['HTTP_USER_API_TOKEN'] = 'invalid_token'
         delete :destroy, format: :json
       end
 
@@ -53,7 +52,7 @@ describe Api::V1::SessionsController do
 
     context 'with valid token' do
       before  do
-        request.headers['HTTP_USER_API_TOKEN'] = token_of(user)
+        add_token_to_header_of(user)
         delete :destroy, format: :json
       end
 

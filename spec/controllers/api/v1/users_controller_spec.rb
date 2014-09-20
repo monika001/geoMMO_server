@@ -53,7 +53,7 @@ describe Api::V1::UsersController do
       let(:user) { create(:user) }
 
       before do
-        log_in_and_set_header(user)
+        log_in user
         delete :destroy, format: :json
       end
 
