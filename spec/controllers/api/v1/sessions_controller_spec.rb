@@ -59,6 +59,13 @@ describe Api::V1::SessionsController do
       end
 
       it { is_expected.to respond_with(:ok) }
+
+      it 'returns email, and message' do
+        expected_response = { email: user.email, message: 'successfully logged out'  }
+        response_hash = JSON.parse(response.body).symbolize_keys!
+
+        expect(response_hash).to eq expected_response
+      end
     end
   end
 end

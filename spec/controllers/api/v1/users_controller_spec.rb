@@ -24,10 +24,18 @@ describe Api::V1::UsersController do
         { email: 'sample@sample.co' }
       end
 
-      it 'is :created' do
+      before do
         post :create, format: :json, user: user_params
+      end
 
-        is_expected.to respond_with(:created)
+      it { is_expected.to respond_with :created }
+
+      it 'returns id, uri and type of created model' do
+        user = User.find_by email: user_params[:email]
+        expected_response = { id: user.id, uri: api_v1_user_url(user), type: 'user' }
+        response_hash = JSON.parse(response.body).symbolize_keys!
+
+        expect(response_hash).to eq expected_response
       end
     end
   end
@@ -57,6 +65,13 @@ describe Api::V1::UsersController do
 
       it 'removes user from db' do
         expect(User.find_by id: user.id).to be nil
+      end
+
+      it 'returns email, and message' do
+        expected_response = { email: user.email, message: 'successfully deleted'  }
+        response_hash = JSON.parse(response.body).symbolize_keys!
+
+        expect(response_hash).to eq expected_response
       end
     end
   end

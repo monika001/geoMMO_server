@@ -15,7 +15,7 @@ class Api::V1::SessionsController < ApplicationController
 
   def destroy
     Session::LogUserOut.call(current_user)
-    render_ok!
+    render_ok! email: current_user.email, message: 'successfully logged out'
   end
 
   private
