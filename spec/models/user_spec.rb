@@ -74,7 +74,7 @@ describe User do
 
     context 'with invalid crednetials' do
       let(:credentials) do
-        { email: '', password: '' }
+        { email: '' }
       end
 
       it 'returns nil' do
