@@ -17,6 +17,8 @@ gem 'devise'
 gem 'uglifier', '>= 1.3.0'
 gem 'active_model_serializers'
 
+gem 'bcrypt'
+
 group :development do
   gem 'spring'
   gem 'figaro'

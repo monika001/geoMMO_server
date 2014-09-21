@@ -63,26 +63,32 @@ describe User do
 
   describe '.authenticate' do
     context 'without crednetials' do
-      let(:email) { nil }
+      let(:credentials) do
+        { email: nil, password: nil }
+      end
 
       it 'returns nil' do
-        expect(User.authenticate(email)).to be nil
+        expect(User.authenticate credentials[:email], credentials[:password]).to be nil
       end
     end
 
     context 'with invalid crednetials' do
-      let(:email) { '' }
+      let(:credentials) do
+        { email: '', password: '' }
+      end
 
       it 'returns nil' do
-        expect(User.authenticate(email)).to be nil
+        expect(User.authenticate credentials[:email], credentials[:password]).to be nil
       end
     end
 
     context 'with valid crednetials' do
-      let(:email) { user.email }
+      let(:credentials) do
+        { email: user.email, password: user.password }
+      end
 
       it 'returns user' do
-        expect(User.authenticate(email)).to eq user
+        expect(User.authenticate credentials[:email], credentials[:password]).to eq user
       end
     end
   end

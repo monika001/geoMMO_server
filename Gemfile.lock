@@ -253,6 +253,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activeadmin!
+  bcrypt
   bootstrap-sass
   coffee-rails (~> 4.0.0)
   compass-rails

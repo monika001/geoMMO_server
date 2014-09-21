@@ -15,18 +15,27 @@ describe Session do
     end
 
     context 'with invalid crednetials' do
-      let(:credentials) do
-        { email: '' }
+      context 'when email is empty' do
+        it 'returns nil' do
+          credentials = { email: '', password: user.password }
+          expect(subject.authenticate_user_with_credentials(credentials)).to eq nil
+        end
       end
 
-      it 'returns nil' do
-        expect(subject.authenticate_user_with_credentials(credentials)).to eq nil
+      context 'when password is empty' do
+        it 'returns nil' do
+          credentials = { email: user.email, password: '' }
+          expect(subject.authenticate_user_with_credentials(credentials)).to eq nil
+        end
       end
     end
 
     context 'with valid credentials' do
       let(:credentials) do
-        { email: user.email }
+        {
+          email: user.email,
+          password: user.password,
+        }
       end
 
       it 'returns user' do
