@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def render_created!(model, location)
     if location
-      response.headers[:location] = location
+      response.location = location
     end
 
     render json: model, status: :created
