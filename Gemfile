@@ -35,6 +35,7 @@ group :development, :test do
   gem 'nyan-cat-formatter'
   gem 'faker'
   gem 'terminal-notifier-guard'
+  gem "codeclimate-test-reporter", require: nil
 end
 
 group :production do

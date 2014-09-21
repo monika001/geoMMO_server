@@ -20,3 +20,8 @@ script:
 
 notifications:
     slack: geommo:vdkjgQEXjK3MmOYQL4C840UG
+
+addons:
+  code_climate:
+    repo_token: a8cdd9f0104daab4258104240d27e09fe8afbb1cce8d79b09afbaee214c21424
+
