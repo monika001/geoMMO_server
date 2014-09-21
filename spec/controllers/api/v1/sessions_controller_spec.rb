@@ -5,15 +5,7 @@ describe Api::V1::SessionsController do
 
   describe '#create' do
     context 'when anonymous user' do
-      before do
-        post :create, format: :json
-      end
-
-      it { is_expected.to respond_with(:unauthorized) }
-
-      it 'returns errors messages' do
-        expect(json_response[:errors]).not_to be_empty
-      end
+      it_behaves_like 'unauthorized user', :post, :create
     end
 
     context 'with invalid credentials' do
@@ -55,15 +47,7 @@ describe Api::V1::SessionsController do
     end
 
     context 'when anonymous user' do
-      before do
-        delete :destroy, format: :json
-      end
-
-      it { is_expected.to respond_with(:unauthorized) }
-
-      it 'returns errors messages' do
-        expect(json_response[:errors]).not_to be_empty
-      end
+      it_behaves_like 'unauthorized user', :delete, :destroy
     end
 
     context 'with valid token' do

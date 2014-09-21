@@ -1,5 +1,5 @@
 module Support
-  module SessionSupport
+  module SessionHelper
     def session_length
       Session.send(:store).length
     end
