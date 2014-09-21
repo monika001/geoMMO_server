@@ -11,7 +11,13 @@ shared_examples_for 'unauthorized user' do |method, action|
 end
 
 shared_examples_for 'respond with location header' do
-  it 'has set location header' do
-    expect(response.headers[:location]).not_to be_empty
+  describe 'respond with location header' do
+    it 'is not nil' do
+      expect(response.headers[:location]).not_to be_empty
+    end
+
+    it 'is path, not url' do
+      expect(response.headers[:location]).not_to include("http://")
+    end
   end
 end

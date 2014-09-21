@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
       id = user.id
       uri = api_v1_user_url user
 
-      render_created! user, api_v1_user_url
+      render_created! user, api_v1_user_path
     else
       render_unprocessable_entity! user.errors.full_messages
     end
