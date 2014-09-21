@@ -23,22 +23,26 @@ describe Api::V1::UsersController do
 
   describe '#create' do
     context 'unprocessable user request' do
-      let(:unprocessable_user_params) do
-        {
-          email: 'sample@sample.com',
-        }
-      end
+      unprocessable_user_params =
+      [
+        { email: 'sample@sample.com' },
+        { email: 'sample@sample.com', password: 'samplePassword123' },
+      ]
 
-      before do
-        post :create, format: :json, user: unprocessable_user_params
-      end
+      unprocessable_user_params.each do |user_params|
+        context "with params: #{user_params}" do
+          before do
+            post :create, format: :json, user: user_params
+          end
 
-      it { is_expected.to respond_with(:unprocessable_entity) }
+          it { is_expected.to respond_with(:unprocessable_entity) }
 
-      it 'respond with errors' do
-        user = User.create(unprocessable_user_params)
+          it 'respond with errors' do
+            user = User.create(user_params)
 
-        expect(json_response[:errors]).to eq user.errors.full_messages
+            expect(json_response[:errors]).to eq user.errors.full_messages
+          end
+        end
       end
     end
 

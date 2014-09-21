@@ -4,6 +4,29 @@ describe User do
   let(:user) { create(:user) }
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of :password }
+    it { is_expected.to validate_presence_of :password_confirmation }
+
+    describe 'password_confirmation' do
+      let(:user) { build(:user) }
+
+      context 'is the same as password' do
+        it 'is valid' do
+          expect(user).to be_valid
+        end
+      end
+
+      context 'is NOT the same as password' do
+        before do
+          user.password += '_mistyped'
+        end
+
+        it 'is NOT valid' do
+          expect(user).not_to be_valid
+        end
+      end
+    end
+
     describe 'email' do
       context 'when valid' do
         valid_emails =
@@ -76,7 +99,7 @@ describe User do
       invalid_credentials =
       [
         { email: '' },
-        { email: 'sample@email.com' },
+        { email: 'sample@email.com', password: 'superPassword' },
         { email: '', password: '', password_confirmation: '' },
       ]
 
