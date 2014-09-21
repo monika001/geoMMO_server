@@ -1,4 +1,4 @@
-shared_examples_for 'current user' do
+shared_examples_for 'respond with current user' do
   it 'returns current_user id' do
     expect(json_response[:user][:id]).to eq user.id
   end

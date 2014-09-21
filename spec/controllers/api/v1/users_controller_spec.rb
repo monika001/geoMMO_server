@@ -17,7 +17,7 @@ describe Api::V1::UsersController do
 
       it { is_expected.to respond_with :ok }
 
-      it_behaves_like 'current user'
+      it_behaves_like 'respond with current user'
     end
   end
 
@@ -53,7 +53,8 @@ describe Api::V1::UsersController do
 
       it { is_expected.to respond_with :created }
 
-      it_behaves_like 'current user'
+      it_behaves_like 'respond with location header'
+      it_behaves_like 'respond with current user'
     end
   end
 

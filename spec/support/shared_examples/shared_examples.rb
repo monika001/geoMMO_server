@@ -9,3 +9,9 @@ shared_examples_for 'unauthorized user' do |method, action|
     expect(json_response[:errors]).not_to be_empty
   end
 end
+
+shared_examples_for 'respond with location header' do
+  it 'has set location header' do
+    expect(response.headers[:location]).not_to be_empty
+  end
+end
