@@ -45,10 +45,6 @@ describe User do
         end
       end
 
-      context 'when invalid' do
-
-      end
-
       context 'when already exists' do
         let(:email) { 'sample@email.co' }
         let(:user) { build(:user, email: email) }
