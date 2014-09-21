@@ -17,7 +17,7 @@ shared_examples_for 'respond with location header' do
     end
 
     it 'is path, not url' do
-      expect(response.location).not_to include("http://")
+      expect(response.location).not_to include('http://')
     end
   end
 end

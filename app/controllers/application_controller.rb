@@ -28,10 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_created!(model, location)
-    if location
-      response.location = location
-    end
-
+    response.location = location if location
     render json: model, status: :created
   end
 

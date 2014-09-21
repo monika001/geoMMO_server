@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   def self.authenticate(email, password)
-    return unless user = User.find_by(email: email)
+    user = User.find_by(email: email)
+    return unless user
 
     user.authenticate password
   end
