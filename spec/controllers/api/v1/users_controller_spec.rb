@@ -24,7 +24,10 @@ describe Api::V1::UsersController do
   describe '#create' do
     context 'unprocessable user request' do
       let(:unprocessable_user_params) do
-        { email: '' }
+        {
+          email: '',
+          password: ''
+        }
       end
 
       before do
@@ -42,10 +45,14 @@ describe Api::V1::UsersController do
 
     context 'valid request' do
       let(:user_params) do
-        { email: 'sample@sample.co' }
+        {
+          email: 'sample@sample.com',
+          password: 'sample123',
+          password_confirmation: 'sample123'
+        }
       end
 
-      let(:user) { User.find_by(user_params) }
+      let(:user) { User.find_by email: user_params[:email] }
 
       before do
         post :create, format: :json, user: user_params

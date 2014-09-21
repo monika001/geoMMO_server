@@ -10,9 +10,6 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      id = user.id
-      uri = api_v1_user_url user
-
       render_created! user, api_v1_user_path
     else
       render_unprocessable_entity! user.errors.full_messages
@@ -29,6 +26,6 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:id, :email, :first_name, :last_name)
+    params.require(:user).permit(:id, :email, :first_name, :last_name, :password, :password_confirmation)
   end
 end

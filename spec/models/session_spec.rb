@@ -87,12 +87,9 @@ describe Session do
 
     context 'with valid token' do
       let(:token) { token_of(user) }
-      let(:credentials) do
-        { email: user.email }
-      end
 
       before do
-        subject.authenticate_user_with_credentials(credentials)
+        add_user_to_session user
       end
 
       it 'returns user' do
