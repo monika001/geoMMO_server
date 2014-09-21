@@ -1,6 +1,26 @@
 require 'rails_helper'
 
 describe Api::V1::UsersController do
+  describe '#show' do
+    context 'unauthorized user' do
+      it_behaves_like 'unauthorized user', :get, :show
+    end
+
+    context 'authorized user' do
+      let(:user) { create(:user) }
+
+      before do
+        log_in user
+
+        get :show, format: :json
+      end
+
+      it { is_expected.to respond_with :ok }
+
+      it_behaves_like 'current user'
+    end
+  end
+
   describe '#create' do
     context 'unprocessable user request' do
       let(:unprocessable_user_params) do
@@ -33,13 +53,7 @@ describe Api::V1::UsersController do
 
       it { is_expected.to respond_with :created }
 
-      it 'returns id' do
-        expect(json_response[:user][:id]).to eq user[:id]
-      end
-
-      it 'returns email' do
-        expect(json_response[:user][:email]).to eq user[:email]
-      end
+      it_behaves_like 'current user'
     end
   end
 

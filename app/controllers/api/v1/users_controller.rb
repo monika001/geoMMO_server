@@ -2,6 +2,10 @@ class Api::V1::UsersController < ApplicationController
   respond_to :json
   skip_before_action :authenticate_with_token!, only: [:create]
 
+  def show
+    render_ok! current_user
+  end
+
   def create
     user = User.new(user_params)
 
@@ -9,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
       id = user.id
       uri = api_v1_user_url user
 
-      render_created! user
+      render_created! user, api_v1_user_url
     else
       render_unprocessable_entity! user.errors.full_messages
     end

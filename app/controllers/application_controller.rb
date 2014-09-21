@@ -27,9 +27,11 @@ class ApplicationController < ActionController::Base
     render json: res, status: :ok
   end
 
-  def render_created!(model, send_localization = true)
-    # if send_localization
-    # TODO: should set header!
+  def render_created!(model, location)
+    if location
+      response.headers[:location] = location
+    end
+
     render json: model, status: :created
   end
 
