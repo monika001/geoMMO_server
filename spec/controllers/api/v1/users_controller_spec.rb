@@ -25,8 +25,7 @@ describe Api::V1::UsersController do
     context 'unprocessable user request' do
       let(:unprocessable_user_params) do
         {
-          email: '',
-          password: ''
+          email: 'sample@sample.com',
         }
       end
 
