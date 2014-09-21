@@ -22,7 +22,8 @@ class Api::V1::SessionsController < ApplicationController
 
   def session_params
     {
-      email: params[:session] && params[:session][:email]
+      email: params[:session] && params[:session][:email],
+      password: params[:session] && params[:session][:password]
     }
   end
 

@@ -9,7 +9,11 @@ describe Session::LogUserIn do
 
   describe '.with_credentials' do
     context 'with invalid credentials' do
-      let(:credentials) { nil }
+      let(:credentials) do
+        {
+          email: user.email
+        }
+      end
 
       it 'returns nil' do
         expect(Session::LogUserIn.with_credentials(credentials)).to eq nil
@@ -18,7 +22,10 @@ describe Session::LogUserIn do
 
     context 'with valid credentials' do
       let(:credentials) do
-        { email: user.email }
+        {
+          email: user.email,
+          password: user.password
+        }
       end
 
       it 'returns user' do

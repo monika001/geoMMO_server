@@ -26,7 +26,10 @@ describe Api::V1::SessionsController do
 
     context 'with valid credentials' do
       let(:session_params) do
-        { email: user.email }
+        {
+          email: user.email,
+          password: user.password
+        }
       end
 
       before do
