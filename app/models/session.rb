@@ -45,7 +45,10 @@ class Session
     end
 
     def add_user_to_session(user)
-      token = SecureRandom.base64
+      begin
+        token = SecureRandom.base64
+      end while store[token] != nil
+
       store[token] = user
       token
     end
