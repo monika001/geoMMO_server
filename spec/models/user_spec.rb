@@ -73,12 +73,19 @@ describe User do
     end
 
     context 'with invalid crednetials' do
-      let(:credentials) do
-        { email: '' }
-      end
+      invalid_credentials =
+      [
+        { email: '' },
+        { email: 'sample@email.com' },
+        { email: '', password: '', password_confirmation: '' },
+      ]
 
-      it 'returns nil' do
-        expect(User.authenticate credentials[:email], credentials[:password]).to be nil
+      invalid_credentials.each do |credentials|
+        context "when credentials: #{credentials}" do
+          it 'returns nil' do
+            expect(User.authenticate credentials[:email], credentials[:password]).to be nil
+          end
+        end
       end
     end
 
