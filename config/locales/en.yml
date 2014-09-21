@@ -4,3 +4,4 @@
 en:
   errors:
     unauthorized: User is not authorized
+    login: Invalid email or password

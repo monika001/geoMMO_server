@@ -9,7 +9,7 @@ class Api::V1::SessionsController < ApplicationController
     if current_user
       render_ok! session: { token: token }
     else
-      render_unauthorized!
+      render_login_error!
     end
   end
 
@@ -24,5 +24,9 @@ class Api::V1::SessionsController < ApplicationController
     {
       email: params[:session] && params[:session][:email]
     }
+  end
+
+  def render_login_error!
+    render json: { errors: [ I18n.t('errors.login') ] }, status: :unauthorized
   end
 end

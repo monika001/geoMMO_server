@@ -26,6 +26,10 @@ describe Api::V1::SessionsController do
       end
 
       it { is_expected.to respond_with(:unauthorized) }
+
+      it 'returns errors messages' do
+        expect(json_response[:errors]).not_to be_empty
+      end
     end
 
     context 'with valid credentials' do
