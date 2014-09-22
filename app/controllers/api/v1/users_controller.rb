@@ -16,6 +16,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update
+    if current_user.update(user_params)
+      render_no_content!
+    else
+      render_unprocessable_entity! current_user.errors.full_messages
+    end
+  end
+
   def destroy
     Session::LogUserOut.call(current_user)
     current_user.destroy

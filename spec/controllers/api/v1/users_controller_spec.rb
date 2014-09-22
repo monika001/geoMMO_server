@@ -68,6 +68,70 @@ describe Api::V1::UsersController do
     end
   end
 
+
+  describe '#update' do
+    let(:user) { create :user }
+
+    context 'when anonymous user' do
+      it_behaves_like 'unauthorized user', :put, :update
+    end
+
+    context 'unprocessable user request' do
+      before do
+        log_in user
+      end
+
+      unprocessable_user_params =
+      [
+        { password: 'newPassword123' },
+        { email: 'sample@sample.com', password: 'samplePassword123' },
+      ]
+
+      unprocessable_user_params.each do |user_params|
+        context "with params: #{user_params}" do
+          before do
+            put :update, format: :json, id: user.id, user: user_params
+          end
+
+          it { is_expected.to respond_with(:unprocessable_entity) }
+
+          it 'respond with errors' do
+            expect(json_response[:errors]).to eq user.errors.full_messages
+          end
+        end
+      end
+    end
+
+    context 'valid request' do
+      before do
+        log_in user
+      end
+
+      let(:user_params) do
+        {
+          password: 'edited_password',
+          password_confirmation: 'edited_password'
+        }
+      end
+
+      let(:do_request) do
+        put :update, format: :json, id: user.id, user: user_params
+      end
+
+      describe 'returns' do
+        before { do_request }
+
+        it { is_expected.to respond_with :no_content }
+      end
+
+      describe 'side effects' do
+        it 'updates user' do
+          expect { do_request }.to change{ user.password_digest }
+        end
+      end
+    end
+  end
+
   describe '#destroy' do
     context 'when anonymous user' do
       it_behaves_like 'unauthorized user', :delete, :destroy
