@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    if current_user.update(user_params)
+    if current_user.update_attributes(user_params)
       render_no_content!
     else
       render_unprocessable_entity! current_user.errors.full_messages
