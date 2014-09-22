@@ -14,7 +14,6 @@ class Api::V1::SampleServiceController < ApplicationController
       user:
       {
         name: 'Sampler',
-        gold: 1,
         hp:
         {
           current: 16,
@@ -24,6 +23,15 @@ class Api::V1::SampleServiceController < ApplicationController
         {
           current: 64,
           base: 128
+        },
+        localization:
+        {
+          logitude: 65.55,
+          latitude: 12.33
+        },
+        inventory:
+        {
+          gold: 100,
         }
       }
     }
