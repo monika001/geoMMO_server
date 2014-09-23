@@ -84,14 +84,14 @@ describe User do
     end
   end
 
-  describe '.authenticate' do
+  describe '#authenticate' do
     context 'without crednetials' do
       let(:credentials) do
         { email: nil, password: nil }
       end
 
       it 'returns nil' do
-        expect(User.authenticate credentials[:email], credentials[:password]).to be nil
+        expect(user.authenticate credentials[:password]).to be nil
       end
     end
 
@@ -106,7 +106,7 @@ describe User do
       invalid_credentials.each do |credentials|
         context "when credentials: #{credentials}" do
           it 'returns nil' do
-            expect(User.authenticate credentials[:email], credentials[:password]).to be nil
+            expect(user.authenticate credentials[:password]).to be nil
           end
         end
       end
@@ -118,7 +118,7 @@ describe User do
       end
 
       it 'returns user' do
-        expect(User.authenticate credentials[:email], credentials[:password]).to eq user
+        expect(user.authenticate credentials[:password]).to eq user
       end
     end
   end
