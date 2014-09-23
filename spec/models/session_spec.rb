@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Session do
   subject { Session }
 
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   describe '.authenticate_user_with_credentials' do
     context 'without credentials' do

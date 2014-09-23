@@ -7,10 +7,13 @@ class Session
     def authenticate_user_with_credentials(credentials)
       return unless credentials && credentials[:email] && credentials[:password]
 
-      user = User.authenticate(credentials[:email], credentials[:password])
-      token = regenerate_token(user)
+      email = credentials[:email]
+      password = credentials[:password]
 
-      [user, token] if user && token
+      user = User.find_by(email: email)
+      user && user.authenticate(password) and
+        token = regenerate_token(user) and
+          [user, token]
     end
 
     def regenerate_token(user)
