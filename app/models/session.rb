@@ -6,11 +6,11 @@ class Session
       # ############################
       # ############################
       if token == 'sample'
-        user = User.new(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
-        if user.save
-          store['sample'] = user
+        user = User.find_by(email: 'sample@sample.co')
+        if user.nil?
+          user = User.create(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
         end
-        store['sample']
+        store['sample'] = user
       end
       # ############################
       # ############################
