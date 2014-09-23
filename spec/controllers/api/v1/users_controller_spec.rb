@@ -102,31 +102,44 @@ describe Api::V1::UsersController do
       end
     end
 
-    context 'valid request' do
+    context 'when valid request' do
+      shared_examples_for 'valid request' do
+        let(:do_request) do
+          put :update, format: :json, id: user.id, user: user_params
+        end
+
+        describe 'returns' do
+          before { do_request }
+
+          it { is_expected.to respond_with :no_content }
+        end
+
+        describe 'side effects' do
+          it 'updates user' do
+            expect { do_request }.to change{ user.public_send(changed_column) }
+          end
+        end
+      end
+
       before do
         log_in user
       end
 
-      let(:user_params) do
-        {
-          password: 'edited_password',
-          password_confirmation: 'edited_password'
-        }
+      context 'on password change' do
+        it_behaves_like 'valid request' do
+          let(:user_params) do
+            { password: 'newPassword123', password_confirmation: 'newPassword123' }
+          end
+          let(:changed_column) { :password_digest }
+        end
       end
 
-      let(:do_request) do
-        put :update, format: :json, id: user.id, user: user_params
-      end
-
-      describe 'returns' do
-        before { do_request }
-
-        it { is_expected.to respond_with :no_content }
-      end
-
-      describe 'side effects' do
-        it 'updates user' do
-          expect { do_request }.to change{ user.password_digest }
+      context 'on first name change' do
+        it_behaves_like 'valid request' do
+          let(:user_params) do
+            { first_name: 'Sample' }
+          end
+          let(:changed_column) { :first_name }
         end
       end
     end
