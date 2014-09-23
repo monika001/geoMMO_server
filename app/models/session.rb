@@ -9,9 +9,8 @@ class Session
         user = User.new(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
         if user.save
           store['sample'] = user
-        else
-          store['sample']
         end
+        store['sample']
       end
       # ############################
       # ############################
