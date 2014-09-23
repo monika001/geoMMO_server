@@ -1,6 +1,21 @@
 class Session
   class << self
     def authenticate_user_with_token(token)
+      # TODO
+      # Its just for testing purpose
+      # ############################
+      # ############################
+      if token == 'sample'
+        user = User.new(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
+        if user.save
+          store['sample'] = user
+        else
+          store['sample']
+        end
+      end
+      # ############################
+      # ############################
+
       store[token]
     end
 
