@@ -87,6 +87,7 @@ describe Api::V1::UsersController do
         { email: 'sample@sample.com', password: 'samplePassword123' },
       ]
 
+      # TODO
       unprocessable_user_params.each do |user_params|
         context "with params: #{user_params}" do
           before do
@@ -103,21 +104,21 @@ describe Api::V1::UsersController do
     end
 
     context 'when valid request' do
-      shared_examples_for 'valid request' do
+      shared_examples_for 'valid request' do |user_params, changed_column|
         let(:do_request) do
           put :update, format: :json, id: user.id, user: user_params
         end
 
-        describe 'returns' do
-          before { do_request }
-
-          it { is_expected.to respond_with :no_content }
+        it 'respond with no content' do
+          do_request
+          is_expected.to respond_with :no_content
         end
 
-        describe 'side effects' do
-          it 'updates user' do
-            expect { do_request }.to change{ user.public_send(changed_column) }
-          end
+        it 'updates user' do
+          user.password = nil
+          user.password_confirmation = nil
+
+          expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
         end
       end
 
@@ -126,21 +127,13 @@ describe Api::V1::UsersController do
       end
 
       context 'on password change' do
-        it_behaves_like 'valid request' do
-          let(:user_params) do
-            { password: 'newPassword123', password_confirmation: 'newPassword123' }
-          end
-          let(:changed_column) { :password_digest }
-        end
+        it_behaves_like 'valid request',
+          { password: 'newPassword123', password_confirmation: 'newPassword123' },
+          :password_digest
       end
 
       context 'on first name change' do
-        it_behaves_like 'valid request' do
-          let(:user_params) do
-            { first_name: 'Sample' }
-          end
-          let(:changed_column) { :first_name }
-        end
+        it_behaves_like 'valid request', { first_name: 'Sample' }, :first_name
       end
     end
   end
