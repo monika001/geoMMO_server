@@ -77,18 +77,7 @@ describe Api::V1::UsersController do
     end
 
     context 'unprocessable user request' do
-      before do
-        log_in user
-      end
-
-      unprocessable_user_params =
-      [
-        { password: 'newPassword123' },
-        { email: 'sample@sample.com', password: 'samplePassword123' },
-      ]
-
-      # TODO
-      unprocessable_user_params.each do |user_params|
+      shared_examples_for 'unprocessable user request' do |user_params|
         context "with params: #{user_params}" do
           before do
             put :update, format: :json, id: user.id, user: user_params
@@ -101,24 +90,33 @@ describe Api::V1::UsersController do
           end
         end
       end
+
+      before do
+        log_in user
+      end
+
+      it_behaves_like 'unprocessable user request', { password: 'newPassword123' }
+      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com', password: 'samplePassword123' }
     end
 
     context 'when valid request' do
       shared_examples_for 'valid request' do |user_params, changed_column|
-        let(:do_request) do
-          put :update, format: :json, id: user.id, user: user_params
-        end
+        context "on #{changed_column} change" do
+          let(:do_request) do
+            put :update, format: :json, id: user.id, user: user_params
+          end
 
-        it 'respond with no content' do
-          do_request
-          is_expected.to respond_with :no_content
-        end
+          it 'respond with no content' do
+            do_request
+            is_expected.to respond_with :no_content
+          end
 
-        it 'updates user' do
-          user.password = nil
-          user.password_confirmation = nil
+          it 'updates user' do
+            user.password = nil
+            user.password_confirmation = nil
 
-          expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
+            expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
+          end
         end
       end
 
@@ -126,15 +124,11 @@ describe Api::V1::UsersController do
         log_in user
       end
 
-      context 'on password change' do
-        it_behaves_like 'valid request',
-          { password: 'newPassword123', password_confirmation: 'newPassword123' },
-          :password_digest
-      end
+      it_behaves_like 'valid request',
+        { password: 'newPassword123', password_confirmation: 'newPassword123' },
+        :password_digest
 
-      context 'on first name change' do
-        it_behaves_like 'valid request', { first_name: 'Sample' }, :first_name
-      end
+      it_behaves_like 'valid request', { first_name: 'Sample' }, :first_name
     end
   end
 
