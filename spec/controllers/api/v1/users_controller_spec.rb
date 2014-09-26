@@ -96,6 +96,7 @@ describe Api::V1::UsersController do
       end
 
       it_behaves_like 'unprocessable user request', { password: 'newPassword123' }
+      it_behaves_like 'unprocessable user request', { password: 'newPassword123', password_confirmation: 'mistype' }
       it_behaves_like 'unprocessable user request', { email: 'sample@sample.com', password: 'samplePassword123' }
     end
 
