@@ -23,13 +23,7 @@ describe Api::V1::UsersController do
 
   describe '#create' do
     context 'unprocessable user request' do
-      unprocessable_user_params =
-      [
-        { email: 'sample@sample.com' },
-        { email: 'sample@sample.com', password: 'samplePassword123' },
-      ]
-
-      unprocessable_user_params.each do |user_params|
+      shared_examples_for 'unprocessable user request' do |user_params|
         context "with params: #{user_params}" do
           before do
             post :create, format: :json, user: user_params
@@ -38,12 +32,13 @@ describe Api::V1::UsersController do
           it { is_expected.to respond_with(:unprocessable_entity) }
 
           it 'respond with errors' do
-            user = User.create(user_params)
-
-            expect(json_response[:errors]).to eq user.errors.full_messages
+            expect(json_response[:errors]).not_to be_empty
           end
         end
       end
+
+      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com' }
+      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com', password: 'samplePassword123' }
     end
 
     context 'valid request' do
@@ -70,7 +65,7 @@ describe Api::V1::UsersController do
 
 
   describe '#update' do
-    let(:user) { create :user }
+    let!(:user) { create :user }
 
     context 'when anonymous user' do
       it_behaves_like 'unauthorized user', :put, :update
@@ -113,9 +108,6 @@ describe Api::V1::UsersController do
           end
 
           it 'updates user' do
-            user.password = nil
-            user.password_confirmation = nil
-
             expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
           end
         end

@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
 
   validates :email, uniqueness:{ case_sensitive: false }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
-  validates :password, presence: true
-  validates :password_confirmation, presence: true
+  validates :password_confirmation, presence: true, on: :create
 
   def authenticate(password)
     user = super

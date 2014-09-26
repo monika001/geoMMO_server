@@ -4,11 +4,26 @@ describe User do
   let(:user) { create(:user) }
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of :password }
-    it { is_expected.to validate_presence_of :password_confirmation }
-
     describe 'password_confirmation' do
       let(:user) { build(:user) }
+
+      context 'without password' do
+        it 'is invalid' do
+          user.password = nil
+          user.password_confirmation = nil
+
+          expect(user).not_to be_valid
+        end
+      end
+
+      context 'without password_confirmation' do
+        it 'is invalid' do
+          user.password = 'password'
+          user.password_confirmation = nil
+
+          expect(user).not_to be_valid
+        end
+      end
 
       context 'is the same as password' do
         it 'is valid' do
