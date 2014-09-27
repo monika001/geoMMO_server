@@ -5,7 +5,11 @@ describe Api::V1::SessionsController do
 
   describe '#create' do
     context 'when anonymous user' do
-      it_behaves_like 'unauthorized user', :post, :create
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          post :create
+        end
+      end
     end
 
     context 'with invalid credentials' do
@@ -50,7 +54,11 @@ describe Api::V1::SessionsController do
     end
 
     context 'when anonymous user' do
-      it_behaves_like 'unauthorized user', :delete, :destroy
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          delete :destroy
+        end
+      end
     end
 
     context 'with valid token' do

@@ -1,6 +1,6 @@
-shared_examples_for 'unauthorized user' do |method, action|
+shared_examples_for 'unauthorized user' do
   before do
-    public_send method, action, { format: :json }
+    do_request
   end
 
   it { is_expected.to respond_with(:unauthorized) }

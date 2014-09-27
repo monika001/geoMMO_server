@@ -21,7 +21,11 @@ describe Api::V1::UsersController do
 
   describe '#show' do
     context 'unauthorized user' do
-      it_behaves_like 'unauthorized user', :get, :show
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          get :show
+        end
+      end
     end
 
     context 'authorized user' do
@@ -30,7 +34,7 @@ describe Api::V1::UsersController do
       before do
         log_in user
 
-        get :show, format: :json
+        get :show
       end
 
       it { is_expected.to respond_with :ok }
@@ -44,7 +48,7 @@ describe Api::V1::UsersController do
       shared_examples_for 'unprocessable user request' do |user_params|
         context "with params: #{user_params}" do
           before do
-            post :create, format: :json, user: user_params
+            post :create, user: user_params
           end
 
           it { is_expected.to respond_with(:unprocessable_entity) }
@@ -71,7 +75,7 @@ describe Api::V1::UsersController do
       let(:user) { User.find_by email: user_params[:email] }
 
       before do
-        post :create, format: :json, user: user_params
+        post :create, user: user_params
       end
 
       it { is_expected.to respond_with :created }
@@ -86,14 +90,18 @@ describe Api::V1::UsersController do
     let!(:user) { create :user }
 
     context 'when anonymous user' do
-      it_behaves_like 'unauthorized user', :put, :update
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          put :update
+        end
+      end
     end
 
     context 'unprocessable user request' do
       shared_examples_for 'unprocessable user request' do |user_params|
         context "with params: #{user_params}" do
           before do
-            put :update, format: :json, id: user.id, user: user_params
+            put :update, id: user.id, user: user_params
           end
 
           it { is_expected.to respond_with(:unprocessable_entity) }
@@ -117,7 +125,7 @@ describe Api::V1::UsersController do
       shared_examples_for 'valid request' do |user_params, changed_column|
         context "on #{changed_column} change" do
           let(:do_request) do
-            put :update, format: :json, id: user.id, user: user_params
+            put :update, id: user.id, user: user_params
           end
 
           it 'respond with no content' do
@@ -145,7 +153,11 @@ describe Api::V1::UsersController do
 
   describe '#destroy' do
     context 'when anonymous user' do
-      it_behaves_like 'unauthorized user', :delete, :destroy
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          delete :destroy
+        end
+      end
     end
 
     context 'when self' do
@@ -153,7 +165,7 @@ describe Api::V1::UsersController do
 
       before do
         log_in user
-        delete :destroy, format: :json
+        delete :destroy
       end
 
       it { is_expected.to respond_with(:no_content) }
