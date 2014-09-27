@@ -1,7 +1,7 @@
 class Api::V1::CharactersController < ApplicationController
   respond_to :json
 
-  before_action :test_bad_request, only: [:update, :destroy]
+  before_action :test_bad_request, only: [:update, :destroy, :show]
 
   def create
     new_character = Character.new model_params
@@ -25,6 +25,10 @@ class Api::V1::CharactersController < ApplicationController
   def destroy
     character.destroy
     render_no_content!
+  end
+
+  def show
+    render_ok! character
   end
 
   private

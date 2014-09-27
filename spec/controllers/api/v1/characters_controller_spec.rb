@@ -143,7 +143,41 @@ describe Api::V1::CharactersController do
     end
   end
 
-  describe 'GET show'
+  describe 'GET show' do
+    let!(:character) { create(:character, user: user) }
+
+    context 'when unauthorized user' do
+      it_behaves_like 'unauthorized user'do
+        let(:do_request) do
+          get :show, id: character.id
+        end
+      end
+    end
+
+    context 'when authorized user' do
+      before do
+        log_in user
+      end
+
+      context 'when invalid request' do
+        it_behaves_like 'bad request' do
+          let(:do_request) do
+            get :show, id: 123
+          end
+        end
+      end
+
+      context 'when valid request' do
+        before do
+          get :show, id: character.id
+        end
+
+        it { is_expected.to respond_with :ok }
+
+        it_behaves_like 'respond with character'
+      end
+    end
+  end
 
   describe 'GET index'
 end
