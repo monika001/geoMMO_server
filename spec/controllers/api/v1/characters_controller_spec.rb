@@ -97,7 +97,35 @@ describe Api::V1::CharactersController do
     end
   end
 
-  describe 'DELETE destroy'
+  describe 'DELETE destroy' do
+    let!(:character) { create(:character, user: user) }
+
+    context 'when unauthorized user' do
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          delete :destroy, id: character.id
+        end
+      end
+    end
+
+    context 'when authorized user' do
+      before do
+        log_in user
+      end
+
+      context 'when valid request' do
+        before do
+          delete :destroy, id: character.id
+        end
+
+        it { is_expected.to respond_with :no_content }
+
+        it 'deletes character from db' do
+          expect( Character.find_by id: character.id ).to eq nil
+        end
+      end
+    end
+  end
 
   describe 'GET show'
 
