@@ -4,6 +4,11 @@ Rails.application.routes.draw do
 
   root 'static_pages#index'
 
+  scope controller: :errors do
+    get '/404', to: :not_found
+    get '/500', to: :exception
+  end
+
   namespace :api, defaults: { format: 'json'  } do
     namespace :v1 do
       get 'sample',       to: 'sample_service#sample'
