@@ -12,6 +12,16 @@ class Api::V1::CharactersController < ApplicationController
     end
   end
 
+  def update
+    character = current_user.characters.find params[:id]
+
+    if character.update(model_params)
+      render_no_content!
+    else
+      render_unprocessable_entity! character.errors.full_messages
+    end
+  end
+
   private
 
   def model_params
