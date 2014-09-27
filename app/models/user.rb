@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
   validates :password_confirmation, presence: true, on: :create
 
+  has_many :characters, dependent: :destroy
+
   def authenticate(password)
     user = super
 
