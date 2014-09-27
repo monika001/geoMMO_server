@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     render json: { errors: errors }, status: :unprocessable_entity
   end
 
+  def render_bad_request!
+    head :bad_request
+  end
+
   def render_ok!(res)
     render json: res, status: :ok
   end

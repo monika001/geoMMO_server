@@ -1,6 +1,8 @@
 class Api::V1::CharactersController < ApplicationController
   respond_to :json
 
+  before_action :test_bad_request, only: [:update, :destroy]
+
   def create
     new_character = Character.new model_params
     new_character.user = current_user
@@ -29,6 +31,10 @@ class Api::V1::CharactersController < ApplicationController
 
   def model_params
     params.require(:character).permit(:name)
+  end
+
+  def test_bad_request
+    render_bad_request! unless character
   end
 
   def character

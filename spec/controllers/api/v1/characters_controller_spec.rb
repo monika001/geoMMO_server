@@ -66,6 +66,14 @@ describe Api::V1::CharactersController do
         log_in user
       end
 
+      context 'when invalid request' do
+        it_behaves_like 'bad request' do
+          let(:do_request) do
+            put :update, id: 123
+          end
+        end
+      end
+
       context 'when unprocessable entity' do
         it_behaves_like 'unprocessable entity' do
           let(:do_request) do
@@ -111,6 +119,14 @@ describe Api::V1::CharactersController do
     context 'when authorized user' do
       before do
         log_in user
+      end
+
+      context 'when invalid request' do
+        it_behaves_like 'bad request' do
+          let(:do_request) do
+            delete :destroy, id: 123
+          end
+        end
       end
 
       context 'when valid request' do
