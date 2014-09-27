@@ -42,11 +42,7 @@ describe Api::V1::CharactersController do
       end
 
       context 'valid request' do
-        let(:character_params) do
-          {
-            name: 'Sample'
-          }
-        end
+        let(:character_params) { attributes_for(:character) }
 
         before do
           post :create, format: :json, character: character_params
