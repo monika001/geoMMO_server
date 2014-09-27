@@ -28,21 +28,11 @@ describe Api::V1::CharactersController do
       end
 
       context 'when unprocessable entity' do
-        shared_examples_for 'unprocessable entity' do |model_params|
-          context "with params: #{model_params}" do
-            before do
-              post :create, character: model_params
-            end
-
-            it { is_expected.to respond_with :unprocessable_entity }
-
-            it 'respond with errors' do
-              expect(json_response[:errors]).not_to be_empty
-            end
+        it_behaves_like 'unprocessable entity' do
+          let(:do_request) do
+            post :create, character: { name: ' ' }
           end
         end
-
-        it_behaves_like 'unprocessable entity', { name: ' ' }
       end
 
       context 'valid request' do

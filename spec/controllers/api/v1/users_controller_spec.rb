@@ -44,23 +44,18 @@ describe Api::V1::UsersController do
   end
 
   describe '#create' do
-    context 'unprocessable user request' do
-      shared_examples_for 'unprocessable user request' do |user_params|
-        context "with params: #{user_params}" do
-          before do
-            post :create, user: user_params
-          end
-
-          it { is_expected.to respond_with(:unprocessable_entity) }
-
-          it 'respond with errors' do
-            expect(json_response[:errors]).not_to be_empty
-          end
+    context 'when unprocessable entity' do
+      it_behaves_like 'unprocessable entity' do
+        let(:do_request) do
+          post :create, user: { email: 'sample@sample.com' }
         end
       end
 
-      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com' }
-      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com', password: 'samplePassword123' }
+      it_behaves_like 'unprocessable entity' do
+        let(:do_request) do
+          post :create, user: { email: 'sample@sample.com', password: 'samplePassword123' }
+        end
+      end
     end
 
     context 'valid request' do
@@ -97,57 +92,55 @@ describe Api::V1::UsersController do
       end
     end
 
-    context 'unprocessable user request' do
-      shared_examples_for 'unprocessable user request' do |user_params|
-        context "with params: #{user_params}" do
-          before do
-            put :update, id: user.id, user: user_params
-          end
-
-          it { is_expected.to respond_with(:unprocessable_entity) }
-
-          it 'respond with errors' do
-            expect(json_response[:errors]).to eq user.errors.full_messages
-          end
-        end
-      end
-
+    context 'when authorized user' do
       before do
         log_in user
       end
 
-      it_behaves_like 'unprocessable user request', { password: 'newPassword123' }
-      it_behaves_like 'unprocessable user request', { password: 'newPassword123', password_confirmation: 'mistype' }
-      it_behaves_like 'unprocessable user request', { email: 'sample@sample.com', password: 'samplePassword123' }
-    end
-
-    context 'when valid request' do
-      shared_examples_for 'valid request' do |user_params, changed_column|
-        context "on #{changed_column} change" do
+      context 'unprocessable user request' do
+        it_behaves_like 'unprocessable entity' do
           let(:do_request) do
-            put :update, id: user.id, user: user_params
+            put :update, id: user.id, user: { password: 'newPassword123' }
           end
+        end
 
-          it 'respond with no content' do
-            do_request
-            is_expected.to respond_with :no_content
+        it_behaves_like 'unprocessable entity' do
+          let(:do_request) do
+            put :update, id: user.id, user: { password: 'newPassword123', password_confirmation: 'mistype' }
           end
+        end
 
-          it 'updates user' do
-            expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
+        it_behaves_like 'unprocessable entity' do
+          let(:do_request) do
+            put :update, id: user.id, user: { email: 'sample@sample.com', password: 'samplePassword123' }
           end
         end
       end
 
-      before do
-        log_in user
+      context 'when valid request' do
+        shared_examples_for 'valid request' do |user_params, changed_column|
+          context "on #{changed_column} change" do
+            let(:do_request) do
+              put :update, id: user.id, user: user_params
+            end
+
+            it 'respond with no content' do
+              do_request
+              is_expected.to respond_with :no_content
+            end
+
+            it 'updates user' do
+              expect { do_request }.to change{ User.find(user.id).public_send(changed_column) }
+            end
+          end
+        end
+
+        it_behaves_like 'valid request',
+          { password: 'newPassword123', password_confirmation: 'newPassword123' },
+          :password_digest
+
+        it_behaves_like 'valid request', { first_name: 'Sample' }, :first_name
       end
-
-      it_behaves_like 'valid request',
-        { password: 'newPassword123', password_confirmation: 'newPassword123' },
-        :password_digest
-
-      it_behaves_like 'valid request', { first_name: 'Sample' }, :first_name
     end
   end
 
