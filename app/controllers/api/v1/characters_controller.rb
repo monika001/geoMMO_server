@@ -31,6 +31,10 @@ class Api::V1::CharactersController < ApplicationController
     render_ok! character
   end
 
+  def index
+    render_ok! current_user.characters
+  end
+
   private
 
   def model_params

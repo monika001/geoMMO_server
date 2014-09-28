@@ -179,5 +179,48 @@ describe Api::V1::CharactersController do
     end
   end
 
-  describe 'GET index'
+  describe 'GET index' do
+    context 'when unauthorized user' do
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          get :index
+        end
+      end
+    end
+
+    context 'when authorized user' do
+      before do
+        log_in user
+      end
+
+      context 'when user have no characters' do
+        before do
+          get :index
+        end
+
+        it { is_expected.to respond_with :ok }
+
+        it 'return empty array' do
+          res = { characters: [] }
+
+          expect(json_response).to eq res
+        end
+      end
+
+      context 'when user have characters' do
+        let!(:character_one) { create(:character, user: user) }
+        let!(:character_two) { create(:character, user: user) }
+
+        before do
+          get :index
+        end
+
+        it { is_expected.to respond_with :ok }
+
+        it 'return array with characters' do
+          expect(json_response[:characters].length).to eq 2
+        end
+      end
+    end
+  end
 end
