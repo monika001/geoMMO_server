@@ -10,9 +10,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_with_token!
+    authenticate_token || render_unauthorized!
+  end
+
+  def authenticate_token
     authenticate_with_http_token do |token, _|
       @current_user = Session::LogUserIn.with_token(token)
-    end or render_unauthorized!
+    end
   end
 
   def render_unauthorized!
