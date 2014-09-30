@@ -5,18 +5,19 @@ class Session
       # Its just for testing purpose
       # ############################
       # ############################
-      if token == 'sample'
-        user = User.find_by(email: 'sample@sample.co')
-        if user.nil?
-          user = User.create(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
-        end
-        store['sample'] = user
-      end
+      #if token == 'sample'
+        #user = User.find_by(email: 'sample@sample.co')
+        #if user.nil?
+          #user = User.create(email: 'sample@sample.co', password: 'haslo123', password_confirmation: 'haslo123')
+        #end
+        #store['sample'] = user
+      #end
       # ############################
       # ############################
 
       Rails.logger.debug '------------------------------------'
       Rails.logger.debug '------------------------------------'
+      Rails.logger.debug token
       Rails.logger.debug store
       Rails.logger.debug '------------------------------------'
       Rails.logger.debug '------------------------------------'
