@@ -15,6 +15,11 @@ class Session
       # ############################
       # ############################
 
+      Rails.logger.debug '------------------------------------'
+      Rails.logger.debug '------------------------------------'
+      Rails.logger.debug store
+      Rails.logger.debug '------------------------------------'
+      Rails.logger.debug '------------------------------------'
       store[token]
     end
 
