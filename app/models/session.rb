@@ -25,12 +25,9 @@ class Session
       password = credentials[:password]
 
       user = User.find_by(email: email)
-      if user && user.authenticate(password)
-        token = regenerate_token(user)
-        if token
+      user && user.authenticate(password) and
+        token = regenerate_token(user) and
           [user, token]
-        end
-      end
     end
 
     def regenerate_token(user)
