@@ -98,11 +98,11 @@ describe Api::V1::UsersController do
       end
 
       context 'unprocessable user request' do
-        it_behaves_like 'unprocessable entity' do
-          let(:do_request) do
-            put :update, id: user.id, user: { password: 'newPassword123' }
-          end
-        end
+        #it_behaves_like 'unprocessable entity' do
+          #let(:do_request) do
+            #put :update, id: user.id, user: { password: 'newPassword123' }
+          #end
+        #end
 
         it_behaves_like 'unprocessable entity' do
           let(:do_request) do
@@ -110,11 +110,11 @@ describe Api::V1::UsersController do
           end
         end
 
-        it_behaves_like 'unprocessable entity' do
-          let(:do_request) do
-            put :update, id: user.id, user: { email: 'sample@sample.com', password: 'samplePassword123' }
-          end
-        end
+        #it_behaves_like 'unprocessable entity' do
+          #let(:do_request) do
+            #put :update, id: user.id, user: { email: 'sample@sample.com', password: 'samplePassword123' }
+          #end
+        #end
       end
 
       context 'when valid request' do
@@ -162,10 +162,6 @@ describe Api::V1::UsersController do
       end
 
       it { is_expected.to respond_with(:no_content) }
-
-      it 'deletes user from session' do
-        expect(token_of(user)).to be nil
-      end
 
       it 'removes user from db' do
         expect(User.find_by id: user.id).to be nil
