@@ -1,19 +1,11 @@
 module Support
   module SessionHelper
-    def session_length
-      Session.send(:store).length
-    end
-
-    def token_of(user)
-      Session.send(:token_of, user)
-    end
-
     def add_user_to_session(user)
-      Session.send(:add_user_to_session, user)
+      user.regenerate_token
     end
 
     def add_token_to_header_of(user)
-      token = ActionController::HttpAuthentication::Token.encode_credentials(token_of(user))
+      token = ActionController::HttpAuthentication::Token.encode_credentials(user.token)
       request.headers['Authorization'] = token
     end
 
