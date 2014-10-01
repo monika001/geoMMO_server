@@ -50,10 +50,6 @@ describe Api::V1::SessionsController do
   end
 
   describe '.destroy' do
-    before do
-      add_user_to_session(user)
-    end
-
     context 'when anonymous user' do
       it_behaves_like 'unauthorized user' do
         let(:do_request) do
@@ -64,7 +60,7 @@ describe Api::V1::SessionsController do
 
     context 'with valid token' do
       before  do
-        add_token_to_header_of(user)
+        log_in user
         delete :destroy, format: :json
       end
 

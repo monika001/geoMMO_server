@@ -4,7 +4,7 @@ describe Session::LogUserOut do
   let(:user) { create(:user) }
 
   before do
-    add_user_to_session(user)
+    user.regenerate_token
   end
 
   describe '.call' do

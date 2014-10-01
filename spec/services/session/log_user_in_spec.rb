@@ -4,7 +4,7 @@ describe Session::LogUserIn do
   let!(:user) { create(:user) }
 
   before do
-    add_user_to_session(user)
+    user.regenerate_token
   end
 
   describe '.with_credentials' do
