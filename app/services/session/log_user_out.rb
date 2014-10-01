@@ -1,7 +1,7 @@
 class Session::LogUserOut
   class << self
     def call(user)
-      Session.destroy_token(user)
+      user.destroy_token
     end
   end
 end
