@@ -9,10 +9,9 @@ describe Session::LogUserOut do
 
   describe '.call' do
     it 'removes user form session' do
-      old_length = session_length
       Session::LogUserOut.call(user)
 
-      expect(session_length).to eq old_length - 1
+      expect(user.token).to eq nil
     end
   end
 end
