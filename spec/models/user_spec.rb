@@ -137,4 +137,20 @@ describe User do
       end
     end
   end
+
+  describe '#regenerate_token' do
+    subject { user.regenerate_token }
+
+    it { expect{ subject }.to change(user, :token) }
+    it { is_expected.to eq user.token }
+  end
+
+  describe '#destroy_token' do
+    subject { user.destroy_token }
+
+    it 'sets token to nil' do
+      subject
+      expect(user.token).to eq nil
+    end
+  end
 end

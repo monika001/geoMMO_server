@@ -13,4 +13,17 @@ class User < ActiveRecord::Base
     return nil unless user
     user
   end
+
+  def regenerate_token
+    begin
+      token = SecureRandom.base64
+    end while self.class.exists?(token: token)
+
+    update_attribute(:token, token)
+    token
+  end
+
+  def destroy_token
+    update_attribute :token, nil
+  end
 end
