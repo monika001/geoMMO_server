@@ -43,7 +43,8 @@ describe Api::V1::SessionsController do
       it { is_expected.to respond_with(:ok) }
 
       it 'returns token' do
-        expect(json_response[:session][:token]).to eq token_of(user)
+        user.reload
+        expect(json_response[:session][:token]).to eq user.token
       end
     end
   end
