@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Session::LogUserIn do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   before do
     add_user_to_session(user)
@@ -29,13 +29,14 @@ describe Session::LogUserIn do
       end
 
       it 'returns user' do
-        expect(Session::LogUserIn.with_credentials(credentials)).to eq [user, token_of(user)]
+        expect(Session::LogUserIn.with_credentials(credentials)).to eq [user, User.find(user).token]
       end
     end
   end
 
   describe '.with_token' do
     context 'with invalid token' do
+      let!(:user_with_nil_token) { create(:user, token: nil) }
       let(:token) { nil }
 
       it 'returns nil' do
@@ -44,10 +45,8 @@ describe Session::LogUserIn do
     end
 
     context 'with valid token' do
-      let(:token) { token_of user }
-
       it 'returns user' do
-        expect(Session::LogUserIn.with_token(token)).to eq user
+        expect(Session::LogUserIn.with_token(user.token)).to eq user
       end
     end
   end
