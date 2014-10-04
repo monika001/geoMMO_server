@@ -17,7 +17,9 @@ Rails.application.routes.draw do
       resource :user, only: [:show, :create, :update, :destroy]
       resource :session, only: [:create, :destroy]
 
-      resources :characters, only: [:show, :index, :create, :update, :destroy]
+      resources :characters, only: [:show, :index, :create, :update, :destroy] do
+        resource :location, only: [:show, :update]
+      end
     end
   end
 end
