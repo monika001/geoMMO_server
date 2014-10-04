@@ -8,6 +8,10 @@ class Api::V1::LocationsController < ApplicationController
     render_no_content!
   end
 
+  def show
+    render_ok! character.location
+  end
+
   private
 
   def model_params
