@@ -42,4 +42,5 @@ group :production do
   gem 'rails_12factor'
   gem 'puma'
   gem 'rollbar'
+  gem 'newrelic_rpm'
 end
