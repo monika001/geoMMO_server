@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       resource :session, only: [:create, :destroy]
 
       resources :characters, only: [:show, :index, :create, :update, :destroy] do
-        resource :location, only: [:show, :update]
+        resource :location, only: [:show, :update] do
+          get 'nerby',    to: :nerby
+        end
       end
     end
   end
