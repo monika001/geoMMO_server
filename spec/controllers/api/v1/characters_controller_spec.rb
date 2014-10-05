@@ -3,13 +3,17 @@ require 'rails_helper'
 describe Api::V1::CharactersController do
   let(:user) { create(:user) }
 
-  shared_examples_for 'respond with character' do
+  shared_examples_for 'respond with representation of character' do
     it 'returns character id' do
       expect(json_response[:character][:id]).not_to be_nil
     end
 
     it 'returns character name' do
       expect(json_response[:character][:name]).not_to be_empty
+    end
+
+    it 'returns character experience' do
+      expect(json_response[:character][:experience]).not_to eq nil
     end
   end
 
@@ -45,7 +49,7 @@ describe Api::V1::CharactersController do
         it { is_expected.to respond_with :created }
 
         it_behaves_like 'respond with location header'
-        it_behaves_like 'respond with character'
+        it_behaves_like 'respond with representation of character'
       end
     end
   end
@@ -174,7 +178,7 @@ describe Api::V1::CharactersController do
 
         it { is_expected.to respond_with :ok }
 
-        it_behaves_like 'respond with character'
+        it_behaves_like 'respond with representation of character'
       end
     end
   end
