@@ -75,4 +75,47 @@ describe Api::V1::LocationsController do
       end
     end
   end
+
+  context 'nerby' do
+    context 'when unauthorized user' do
+      it_behaves_like 'unauthorized user' do
+        let(:do_request) do
+          get :nerby, character_id: character.id
+        end
+      end
+    end
+
+    context 'when authorized user' do
+      before do
+        log_in user
+      end
+
+      context 'when bad request' do
+        it_behaves_like 'bad request' do
+          let(:second_user) { create :user, :with_character }
+          let(:do_request) do
+            get :nerby, character_id: second_user.characters.first.id
+          end
+        end
+
+        it_behaves_like 'bad request' do
+          let(:do_request) do
+            get :nerby, character_id: -1
+          end
+        end
+      end
+
+      context 'when valid request' do
+        let!(:second_user) { create :user, :with_character }
+        let!(:third_user) { create :user, :with_character }
+
+        before do
+          get :nerby, character_id: user.characters.first.id
+        end
+
+        it { is_expected.to respond_with(:ok) }
+        it { expect(json_response[:locations].length).to eq 2 }
+      end
+    end
+  end
 end
