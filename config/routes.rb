@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
       resources :characters, only: [:show, :index, :create, :update, :destroy] do
         resource :location, only: [:show, :update] do
-          get 'nerby',    to: :nerby
+          get 'nearby',    to: :nearby
         end
       end
     end

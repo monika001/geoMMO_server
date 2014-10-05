@@ -12,8 +12,8 @@ class Api::V1::LocationsController < ApplicationController
     render_ok! character.location
   end
 
-  def nerby
-    render_ok! Location.nerby(character.location)
+  def nearby
+    render_ok! Location.nearby(character.location)
   end
 
   private
