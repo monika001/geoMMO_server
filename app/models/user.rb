@@ -26,4 +26,8 @@ class User < ActiveRecord::Base
   def destroy_token
     update_attribute :token, nil
   end
+
+  def to_s
+    email
+  end
 end

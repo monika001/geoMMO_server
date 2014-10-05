@@ -153,4 +153,11 @@ describe User do
       expect(user.token).to eq nil
     end
   end
+
+  describe '#to_s' do
+    let(:user) { build(:user, email: 'los.samplos@sample.co') }
+    subject { user.to_s }
+
+    it { is_expected.to eq 'los.samplos@sample.co' }
+  end
 end
