@@ -33,6 +33,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'nyan-cat-formatter'
+  gem 'fuubar'
   gem 'faker'
   gem 'terminal-notifier-guard'
   gem "codeclimate-test-reporter", require: nil
